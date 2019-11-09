@@ -108,12 +108,6 @@ Within the cv virtual environment,
 cd ~/opencv-4.1.2
 mkdir build
 cd build
-
-cmake -D CMAKE_BUILD_TYPE=RELEASE \
-    -D CMAKE_INSTALL_PREFIX=/usr/local \
-    -D INSTALL_PYTHON_EXAMPLES=OFF \
-    -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-4.1.2/modules \
-    -D BUILD_EXAMPLES=OFF ..
     
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_INSTALL_PREFIX=/usr/local \
@@ -150,8 +144,32 @@ Install OpenCV
 sudo make install
 sudo ldconfig
 
-
 Set the bindings so that cv can be called within a script
 
 $ cd ~/.virtualenvs/cv/lib/python3.5/site-packages/
 $ ln -s /usr/local/lib/python3.5/site-packages/cv2.so cv2.so
+
+
+#Setting up WiFi Capabilities on the Pi at School
+
+The Pi GUI does not like WPA-EAP encryption. This can be overcome by editing the file which contains all the wifi information. From the terminal
+
+sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+
+Add the following, where ssid = "network name" , identity = "student id", password = "password" 
+
+network={
+      ssid=""
+      priority=1
+      proto=RSN
+      key_mgmt=WPA-EAP
+      pairwise=CCMP
+      auth_alg=OPEN
+      eap=PEAP
+      identity=""
+      password=""
+      phase1="peaplabel=0"
+      phase2="auth=MSCHAPV2"
+      }
+
+Save and restart the pi for changes to take effect. It should then automatically sign in.
