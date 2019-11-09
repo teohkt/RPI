@@ -64,6 +64,9 @@ Currently the latest OpenCV is 4.1.2 [4 minutes]
 ###wget -O opencv.zip https://github.com/Itseez/opencv/archive/4.1.2.zip
 ###unzip opencv_contrib.zip
 
+wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/4.1.2.zip
+unzip opencv_contrib.zip
+
 ##Obtaining Python 2.7 and Python 3
 
 1. Get pip [1 minute]
@@ -82,9 +85,73 @@ Currently the latest OpenCV is 4.1.2 [4 minutes]
 
 Apply this to ~./profile through
 
-
-
 $ echo -e "\n# virtualenv and virtualenvwrapper" >> ~/.profile
 $ echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.profile
 $ echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3" >> ~/.profile
 $ echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.profile
+
+Reload source and create a virtual evironment!
+###source ~/.profile
+###mkvirtualenv cv -p python3
+
+To check into your virtual environment,
+
+###source ~/.profile
+###workon cv
+
+##Installing Numpy [3 minutes]
+Within the cv virtual environment,
+###pip install numpy
+
+##Compile and Install OpenCV
+
+cd ~/opencv-4.1.2
+mkdir build
+cd build
+
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D INSTALL_PYTHON_EXAMPLES=OFF \
+    -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-4.1.2/modules \
+    -D BUILD_EXAMPLES=OFF ..
+    
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-4.1.2/modules \
+    -D ENABLE_NEON=ON \
+    -D ENABLE_VFPV3=ON \
+    -D BUILD_TESTS=OFF \
+    -D OPENCV_ENABLE_NONFREE=ON \
+    -D INSTALL_PYTHON_EXAMPLES=OFF \
+    -D BUILD_EXAMPLES=OFF ..
+
+observe the current total swap size, this should be < 100
+free -m 
+
+Change it to 1024
+
+sudo nano /etc/dphys-swapfile    
+#CONDF_SWPASIZE=100
+CONF_SWAPSIZE=1024
+
+^ is the control function. Press "ctrl" + "x" to exit, and "Y" for yes. Press enter to save.
+
+$ sudo /etc/init.d/dphys-swapfile stop
+$ sudo /etc/init.d/dphys-swapfile start
+
+make -j4
+
+To delete the build directory, we can use
+
+rm -r build
+
+Install OpenCV
+
+sudo make install
+sudo ldconfig
+
+
+Set the bindings so that cv can be called within a script
+
+$ cd ~/.virtualenvs/cv/lib/python3.5/site-packages/
+$ ln -s /usr/local/lib/python3.5/site-packages/cv2.so cv2.so
