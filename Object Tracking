@@ -12,16 +12,22 @@ to capture an image:
 
 raspistill -o output.jpg
 
-Captured an image of the box for the GPIO breakout board & Ribbon cable for Raspberry Pi.
-Uploaded image to colorcodepicker.com ti find the RBG code on the yellow portion. This returned 195, 149, 14
+Captured an image of a highlighter cap.
+Uploaded image to colorcodepicker.com to find the RBG code of it. This returned 36, 177, 41
 
-After running python3 bgr_hsv_converter.py 195 149 14
+After running python3 bgr_hsv_converter.py 36 177 41
 
 Output:
 Lower bound is:
-[88, 100, 100]
+[50, 100, 100]
 
 Upper bount is:
-[108, 255, 255]
+[70, 255, 255]
 
-When applying the mask to remove all colours but the yellow, it inturn removed all colours byt the yellow.
+We can test to see if our HSV numbers are correct by applying a mask that removes everything but these colours.
+
+
+
+
+
+sudo pip3 install --upgrade imutils
