@@ -1,0 +1,27 @@
+#Testing out the Camera
+
+I got errors from cv2.videocapture(0), 'VIDEOIO ERROR: V4L: can't open camera by index 0'. I tried changing to videocapture(-1), but then the error message was 'can't find camera device. The solution was to allow permissions to access the camera (ontop of Preferences > Raspberry Pi Configuration)
+
+sudo modprobe bcm2835-v4l2
+
+I got errors from import cv2, 'ImportError: No module named 'cv2' although when I tested it in terminal, I could import cv2. Turns out, cv2.so needs to be exactly in /usr/local/lib/python3.5/site-packages/. You can gain root permission through 
+
+gksudo pcmanfm
+
+to capture an image:
+
+raspistill -o output.jpg
+
+Captured an image of the box for the GPIO breakout board & Ribbon cable for Raspberry Pi.
+Uploaded image to colorcodepicker.com ti find the RBG code on the yellow portion. This returned 195, 149, 14
+
+After running python3 bgr_hsv_converter.py 195 149 14
+
+Output:
+Lower bound is:
+[88, 100, 100]
+
+Upper bount is:
+[108, 255, 255]
+
+When applying the mask to remove all colours but the yellow, it inturn removed all colours byt the yellow.
