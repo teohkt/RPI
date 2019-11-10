@@ -1,4 +1,4 @@
-#Testing out the Camera
+# Testing out the Camera
 
 I got errors from cv2.videocapture(0), 'VIDEOIO ERROR: V4L: can't open camera by index 0'. I tried changing to videocapture(-1), but then the error message was 'can't find camera device. The solution was to allow permissions to access the camera (ontop of Preferences > Raspberry Pi Configuration)
 
