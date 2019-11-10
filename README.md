@@ -105,52 +105,55 @@ Within the cv virtual environment,
 
 ## Compile and Install OpenCV
 
-cd ~/opencv-4.1.2
-mkdir build
-cd build
-    
-cmake -D CMAKE_BUILD_TYPE=RELEASE \
-    -D CMAKE_INSTALL_PREFIX=/usr/local \
-    -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-4.1.2/modules \
-    -D ENABLE_NEON=ON \
-    -D ENABLE_VFPV3=ON \
-    -D BUILD_TESTS=OFF \
-    -D OPENCV_ENABLE_NONFREE=ON \
-    -D INSTALL_PYTHON_EXAMPLES=OFF \
-    -D BUILD_EXAMPLES=OFF ..
+### cd ~/opencv-4.1.2
+### mkdir build
+### cd build
+
+The .. is important, include it. If a different version of open cv was used (ie not 4.1.2, make sure the path is updated)
+
+### cmake -D CMAKE_BUILD_TYPE=RELEASE \
+###     -D CMAKE_INSTALL_PREFIX=/usr/local \
+###     -D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib-4.1.2/modules \
+###     -D ENABLE_NEON=ON \
+###     -D ENABLE_VFPV3=ON \
+###     -D BUILD_TESTS=OFF \
+###     -D OPENCV_ENABLE_NONFREE=ON \
+###     -D INSTALL_PYTHON_EXAMPLES=OFF \
+###     -D BUILD_EXAMPLES=OFF ..
 
 observe the current total swap size, this should be < 100
-free -m 
+### free -m 
 
-Change it to 1024
+Change it to 1024 by using nano
 
-sudo nano /etc/dphys-swapfile    
-#CONDF_SWPASIZE=100
-CONF_SWAPSIZE=1024
+### sudo nano /etc/dphys-swapfile    
+### #CONDF_SWPASIZE=100
+### CONF_SWAPSIZE=1024
 
 ^ is the control function. Press "ctrl" + "x" to exit, and "Y" for yes. Press enter to save.
 
-$ sudo /etc/init.d/dphys-swapfile stop
-$ sudo /etc/init.d/dphys-swapfile start
+### sudo /etc/init.d/dphys-swapfile stop
+### sudo /etc/init.d/dphys-swapfile start
 
-make -j4
+### make -j4
 
 To delete the build directory, we can use
 
-rm -r build
+### rm -r build
 
 Install OpenCV
 
-sudo make install
-sudo ldconfig
+### sudo make install
+### sudo ldconfig
 
 Set the bindings so that cv can be called within a script
 
-$ cd ~/.virtualenvs/cv/lib/python3.5/site-packages/
-$ ln -s /usr/local/lib/python3.5/site-packages/cv2.so cv2.so
+###  cd ~/.virtualenvs/cv/lib/python3.5/site-packages/
+###  ln -s /usr/local/lib/python3.5/site-packages/cv2.so cv2.so
 
+For my install placed cv2.so deeper into site-packages, I coppied out cv2.so and placed it into site-packages to work. cv2.so was also a different name, this was changed to cv2 so it could work.
 
-#Setting up WiFi Capabilities on the Pi at School
+# Setting up WiFi Capabilities on the Pi at School
 
 The Pi GUI does not like WPA-EAP encryption. This can be overcome by editing the file which contains all the wifi information. From the terminal
 
