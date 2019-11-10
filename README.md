@@ -62,10 +62,9 @@ From now on, you can access the RPI through the same WIFI config with
 Currently the latest OpenCV is 4.1.2 [4 minutes]
 
 ### wget -O opencv.zip https://github.com/Itseez/opencv/archive/4.1.2.zip
+### wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/4.1.2.zip
 ### unzip opencv_contrib.zip
-
-wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/4.1.2.zip
-unzip opencv_contrib.zip
+### unzip opencv_contrib.zip
 
 ## Obtaining Python 2.7 and Python 3
 
@@ -127,8 +126,8 @@ observe the current total swap size, this should be < 100
 Change it to 1024 by using nano
 
 ### sudo nano /etc/dphys-swapfile    
-### #CONDF_SWPASIZE=100
-### CONF_SWAPSIZE=1024
+#CONDF_SWPASIZE=100
+CONF_SWAPSIZE=1024
 
 ^ is the control function. Press "ctrl" + "x" to exit, and "Y" for yes. Press enter to save.
 
@@ -157,7 +156,7 @@ For my install placed cv2.so deeper into site-packages, I coppied out cv2.so and
 
 The Pi GUI does not like WPA-EAP encryption. This can be overcome by editing the file which contains all the wifi information. From the terminal
 
-sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
+### sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 
 Add the following, where ssid = "network name" , identity = "student id", password = "password" 
 
